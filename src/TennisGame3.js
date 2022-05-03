@@ -7,18 +7,29 @@ const TennisGame3 = function (name1, name2) {
 };
 
 TennisGame3.prototype.getScore = function () {
-  let s;
+  const isTied = this.scorePlayer1 === this.scorePlayer2;
   if ((this.scorePlayer1 < 4 && this.scorePlayer2 < 4) && (this.scorePlayer1 + this.scorePlayer2 < 6)) {
-    const p = ['Love', 'Fifteen', 'Thirty', 'Forty'];
-    s = p[this.scorePlayer1];
-    return (this.scorePlayer1 === this.scorePlayer2) ? s + '-All' : s + '-' + p[this.scorePlayer2];
-  } else {
-    if (this.scorePlayer1 === this.scorePlayer2)
-      return 'Deuce';
-    s = this.scorePlayer1 > this.scorePlayer2 ? this.player1Name : this.player2Name;
-    return ((this.scorePlayer1 - this.scorePlayer2) * (this.scorePlayer1 - this.scorePlayer2) === 1) ? 'Advantage ' + s : 'Win for ' + s;
+    const scorePlayer1 = getTextPlayerScore(this.scorePlayer1);
+    const scorePlayer2 = getTextPlayerScore(this.scorePlayer2)
+    return getFinalScore(scorePlayer1, scorePlayer2);
   }
+  if (isTied){
+    return 'Deuce';
+  }
+  const highestScorePlayer = this.scorePlayer1 > this.scorePlayer2 ? this.player1Name : this.player2Name;
+  const checkAdvantage = (this.scorePlayer1 - this.scorePlayer2) * (this.scorePlayer1 - this.scorePlayer2);
+  const advantageScore = 'Advantage ' + highestScorePlayer;
+  const winScore = 'Win for ' + highestScorePlayer;
+  return (checkAdvantage === 1) ? advantageScore : winScore;
 };
+
+function getFinalScore(scorePlayer1, scorePlayer2){
+  const isTied = scorePlayer1 === scorePlayer2;
+  if(isTied){
+    return scorePlayer1 + '-All';
+  }
+  return scorePlayer1 + '-' + scorePlayer2;
+}
 
 TennisGame3.prototype.wonPoint = function (playerName) {
   if (playerName === 'player1')
@@ -27,5 +38,10 @@ TennisGame3.prototype.wonPoint = function (playerName) {
     this.scorePlayer2 += 1;
 
 };
+
+function getTextPlayerScore(score){
+  const actualScore = ['Love', 'Fifteen', 'Thirty', 'Forty'];
+  return actualScore[score];
+}
 
 module.exports = TennisGame3;
