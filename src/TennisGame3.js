@@ -8,7 +8,8 @@ const TennisGame3 = function (name1, name2) {
 
 TennisGame3.prototype.getScore = function () {
   const isTied = this.scorePlayer1 === this.scorePlayer2;
-  if ((this.scorePlayer1 < 4 && this.scorePlayer2 < 4) && (this.scorePlayer1 + this.scorePlayer2 < 6)) {
+  const sumScores = this.scorePlayer1 + this.scorePlayer2;
+  if ((this.scorePlayer1 < 4 && this.scorePlayer2 < 4) && (sumScores < 6)) {
     const scorePlayer1 = getTextPlayerScore(this.scorePlayer1);
     const scorePlayer2 = getTextPlayerScore(this.scorePlayer2)
     return getFinalScore(scorePlayer1, scorePlayer2);
