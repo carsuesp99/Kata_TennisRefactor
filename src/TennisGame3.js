@@ -17,7 +17,7 @@ TennisGame3.prototype.getScore = function () {
   if (isTied){
     return 'Deuce';
   }
-  const highestScorePlayer = this.scorePlayer1 > this.scorePlayer2 ? this.player1Name : this.player2Name;
+  let highestScorePlayer = this.scorePlayer1 > this.scorePlayer2 ? this.player1Name : this.player2Name;
   const checkAdvantage = (this.scorePlayer1 - this.scorePlayer2) * (this.scorePlayer1 - this.scorePlayer2);
   const advantageScore = 'Advantage ' + highestScorePlayer;
   const winScore = 'Win for ' + highestScorePlayer;
